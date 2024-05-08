@@ -22,7 +22,7 @@ public class Block {
         return this.falls_with_gravity;
     }
 
-    public boolean isSolid() {
+    public boolean isNotSolid() {
         return this.fall_through;
     }
 

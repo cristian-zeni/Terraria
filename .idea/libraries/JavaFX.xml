@@ -4,7 +4,7 @@
       <root url="file://$USER_HOME$/javafx/lib" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME$/javafx/openjfx-21.0.2-javadoc" />
+      <root url="file://$USER_HOME$/javafx/javafx-21.0.2-javadoc" />
     </JAVADOC>
     <NATIVE>
       <root url="file://$USER_HOME$/javafx/lib" />

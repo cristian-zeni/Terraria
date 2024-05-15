@@ -2,7 +2,7 @@ package data.block;
 
 public abstract class AbstractBlock implements Block{
     public char contenuto;
-    private String blockname;
+    public String blockname;
     public boolean falls_with_gravity;
     public boolean fall_through;
     public boolean isGravityAffected(){
@@ -19,7 +19,7 @@ public abstract class AbstractBlock implements Block{
 
     @Override
     public String toString(){
-        return blockname;
+        return "Nome: " + blockname + "; Gravità" + falls_with_gravity + "; Solido: " + !fall_through;
     }
 
 }

@@ -1,15 +1,19 @@
-package data;
+package data.userInterface;
+
+import data.block.AbstractBlock;
+import data.block.AirBlock;
+import data.block.CustomBlock;
 
 public class Map {
 
     private static final int DIM = 8;
-    private Block[][] map;
+    private AbstractBlock[][] map;
 
     public Map(){
-        map = new Block[DIM][DIM];
+        map = new AirBlock[DIM][DIM];
         for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
-                map[i][j] = new Block();
+                map[i][j] = new AirBlock();
             }
         }
     }
@@ -18,13 +22,13 @@ public class Map {
         if (row >= DIM || column >= DIM) {
             System.err.println("La cella richiesta è fuori dalla mappa");
         } else {
-            this.map[row][column] = new Block('A');
+            this.map[row][column] = new CustomBlock('A');
         }
     }
 
     private void swap(int x, int y){
         if(map[x+1][y].isNotSolid()){
-            Block tmp = map[x+1][y];
+            AbstractBlock tmp = map[x+1][y];
             map[x+1][y] = map[x][y];
             map[x][y] = tmp;
         }else{
@@ -43,7 +47,7 @@ public class Map {
         }
     }*/
 
-    public void insert_iter(int x, int y, Block b){
+    public void insert_iter(int x, int y, CustomBlock b){
         if(x >= DIM || y >= DIM){
             System.err.println("La cella richiesta è fuori dalla mappa");
             return;
@@ -59,7 +63,7 @@ public class Map {
         }
     }
 
-    public void insert_rec(int x, int y, Block b){
+    public void insert_rec(int x, int y, CustomBlock b){
         if(x < DIM && y < DIM){
             map[x][y] = b;
         }else{

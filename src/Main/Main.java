@@ -1,7 +1,8 @@
 package Main;
 
-import data.Block;
-import data.Map;
+import data.block.AirBlock;
+import data.block.CustomBlock;
+import data.userInterface.Map;
 
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class Main {
     }
 
     static void test(){
-        Block n = new Block('S');
+        CustomBlock n = new CustomBlock('S');
         //world.insert_at_coords(0,2, n);
         world.insert_iter(0,2, n);
         world.insert_rec(0,3,n);

@@ -1,6 +1,6 @@
-package data.block;
+package data.block.typesOfBlock;
 
-import data.block.interfaces.AbstractSolidBlock;
+import data.block.AbstractSolidBlock;
 
 public class GlassBlock extends AbstractSolidBlock {
     public GlassBlock() {

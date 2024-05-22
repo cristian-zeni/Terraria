@@ -1,4 +1,4 @@
-package data.block.interfaces;
+package data.block;
 
 import data.block.AbstractBlock;
 

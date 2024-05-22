@@ -1,6 +1,8 @@
-package data.block;
+package data.block.typesOfBlock;
 
-public class WaterBlock extends AbstractBlock{
+import data.block.AbstractBlock;
+
+public class WaterBlock extends AbstractBlock {
     public WaterBlock(){
         this.blockname = "Water";
         this.contenuto = '~';

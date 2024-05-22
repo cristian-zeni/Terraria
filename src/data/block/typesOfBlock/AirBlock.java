@@ -1,6 +1,8 @@
-package data.block;
+package data.block.typesOfBlock;
 
-public class AirBlock extends AbstractBlock{
+import data.block.AbstractBlock;
+
+public class AirBlock extends AbstractBlock {
 
     public AirBlock(){
         this.contenuto = '.';

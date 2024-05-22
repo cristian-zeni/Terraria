@@ -1,9 +1,13 @@
 package data.userInterface;
 
-import data.block.AirBlock;
+import data.block.interfaces.SmeltableBlock;
+import data.block.typesOfBlock.AirBlock;
 import data.block.interfaces.Block;
-import data.block.SandBlock;
-import data.block.WaterBlock;
+import data.block.typesOfBlock.SandBlock;
+import data.block.typesOfBlock.WaterBlock;
+import data.utility.Coordinate;
+
+import java.util.Random;
 
 public class Map {
 
@@ -17,76 +21,88 @@ public class Map {
                 map[i][j] = new AirBlock();
             }
         }
-        addRiver();
+        popolate(15, 3);
     }
 
-    public void change_cell(int row, int column) {
-        if (row >= DIM || column >= DIM) {
+    //Start insert block methods
+    public void change_cell(Coordinate c, Block b) {
+        if (!coordBound(c)) {
             System.err.println("La cella richiesta è fuori dalla mappa");
         } else {
-            this.map[row][column] = new SandBlock();
+            this.map[c.getX()][c.getY()] = b;
         }
     }
 
-    private void swap(int x, int y){
-        if(map[x+1][y].isNotSolid()){
-            Block tmp = map[x+1][y];
-            map[x+1][y] = map[x][y];
-            map[x][y] = tmp;
+    public void popolate(int solid, int water){
+        Random rand = new Random();
+        for (int i = 0 ; i < solid; i++){
+            Block b = new SandBlock();
+            int row = rand.nextInt(DIM);
+            int col = rand.nextInt(DIM);
+            Coordinate c = new Coordinate(row, col);
+            insert_rec(c, b);
+        }
+        for(int i = 0; i < water; i++){
+            addRiver();
+        }
+    }
+
+    public void insert_iter(Coordinate c, Block b){
+        if(coordBound(c)){
+            System.err.println("La cella richiesta è fuori dalla mappa");
+            return;
+        }
+
+        map[c.getX()][c.getY()] = b;
+
+        if (!map[c.getX()][c.getY()].isGravityAffected()){
+            return;
+        }
+        while(c.getX()+1 < DIM && map[c.getX()+1][c.getY()].isNotSolid()) {
+            swap(c);
+            c.setX(c.getX()+1);
+        }
+    }
+
+    public void insert_rec(Coordinate c, Block b){
+        if(coordBound(c)){
+            map[c.getX()][c.getY()] = b;
+        }else{
+            System.err.println("La cella richiesta è fuori dalla mappa");
+            return;
+        }
+
+        if(c.getX() == DIM-1 || !map[c.getX()][c.getY()].isGravityAffected() || !map[c.getX()+1][c.getY()].isNotSolid()){
+            return;
+        }
+        swap(c);
+        c.setX(c.getX()+1);
+        insert_rec(c, b);
+
+    }
+
+
+    //End insert block
+
+    //Start physics method
+    private void swap(Coordinate c){
+        if(map[c.getX()+1][c.getY()].isNotSolid()){
+            Block tmp = map[c.getX()+1][c.getY()];
+            map[c.getX()+1][c.getY()] = map[c.getX()][c.getY()];
+            map[c.getX()][c.getY()] = tmp;
         }else{
             System.err.println("Il blocco sotto è solido");
         }
     }
 
-    /*public void insert_at_coords(int x, int y, Block b){
-        if(x >= DIM || y >= DIM){
-            System.err.println("La cella richiesta è fuori dalla mappa");
-            return;
-        }
-        map[x][y] = b;
-        if (map[x][y].isGravityAffected() && map[x+1][y].isNotSolid()){
-            swap(x, y);
-        }
-    }*/
-
-    public void insert_iter(int x, int y, Block b){
-        if(x >= DIM || y >= DIM){
-            System.err.println("La cella richiesta è fuori dalla mappa");
-            return;
-        }
-
-        map[x][y] = b;
-
-        if (!map[x][y].isGravityAffected()){
-            return;
-        }
-        while(x+1 < DIM && map[x+1][y].isNotSolid()) {
-            swap(x, y);
-            x++;
-        }
-    }
-
-    public void insert_rec(int x, int y, Block b){
-        if(x < DIM && y < DIM){
-            map[x][y] = b;
-        }else{
-            System.err.println("La cella richiesta è fuori dalla mappa");
-            return;
-        }
-
-        if(x == DIM-1 || !map[x][y].isGravityAffected() || !map[x+1][y].isNotSolid()){
-            return;
-        }
-        swap(x, y);
-        insert_rec(x+1, y, b);
-
-    }
+    //End physics method
 
     //Start of water methods
     private void addRowsOfWater(){
         WaterBlock a = new WaterBlock();
         for(int y = 0; y < DIM; y++){
-            insert_rec(0, y, a);
+            Coordinate c = new Coordinate(0, y);
+            insert_rec(c, a);
         }
     }
 
@@ -100,6 +116,28 @@ public class Map {
     }
 
     //End of water methods
+
+    //Start of control methods
+    public boolean isSmeltable(Coordinate c){
+        if(map[c.getX()][c.getY()] instanceof SmeltableBlock){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Block getBlock(Coordinate c){
+        return map[c.getX()][c.getY()];
+    }
+
+    private boolean coordBound(Coordinate c){
+        if(c.getX() >= DIM || c.getY() >= DIM){
+            return false;
+        }
+        return true;
+    }
+
+    //End of control methods
 
     public void display_on_out(){
         for (int i = 0; i < DIM; i++){

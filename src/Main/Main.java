@@ -1,49 +1,40 @@
 package Main;
 
-import data.block.SandBlock;
-import data.userInterface.Map;
+import data.userInterface.MainView;
+import data.utility.Coordinate;
 
 import java.util.Scanner;
 
 public class Main {
 
-    private static Map world;
+    private static MainView view;
 
     public static void main(String[] args){
         generate();
-        test();
+        test(5);
     }
 
     static void generate(){
 
-        world = new Map();
-        world.display_on_out();
+        view = new MainView();
+        view.display_on_out();
 
-        /*for (int i = 0; i < 5; i++) {
-            System.out.print("Enter row ");
-            Scanner s = new Scanner(System.in);
-            int row = s.nextInt();
-
-            System.out.print("Enter column: ");
-            int col = s.nextInt();
-
-            System.out.println("Changing: " + row + " - " + col);
-            world.change_cell(row, col);
-            world.display_on_out();
-        }*/
     }
 
-    static void test(){
-        SandBlock s = new SandBlock();
-        //world.insert_at_coords(0,2, n);
-        world.insert_iter(0,2, s);
-        world.insert_rec(0,3,s);
-        world.insert_rec(0, 2, s);
-        System.out.println();
-        world.display_on_out();
-        System.out.println();
-        world.addSea();
-        world.display_on_out();
+    static void test(int interactions){
+        for (int i = 0 ; i < interactions ; i++){
+            System.out.print("Enter row and then column, or enter '9' and then '9' for smelting: ");
+            Scanner s = new Scanner(System.in);
+            int row = s.nextInt();
+            int col = s.nextInt();
+            if (row == 9 && col == 9){
+                view.smelt();
+            }else{
+                Coordinate c = new Coordinate(row, col);
+                view.move_into_furnace(c);
+            }
+            view.display_on_out();
+        }
     }
 
 }   

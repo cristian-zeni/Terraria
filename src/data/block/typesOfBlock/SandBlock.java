@@ -1,5 +1,7 @@
-package data.block;
+package data.block.typesOfBlock;
 
+import data.block.AbstractBlock;
+import data.block.interfaces.Block;
 import data.block.interfaces.SmeltableBlock;
 
 public class SandBlock extends AbstractBlock implements SmeltableBlock {
@@ -10,7 +12,7 @@ public class SandBlock extends AbstractBlock implements SmeltableBlock {
         this.fall_through = false;
     }
 
-    public AbstractBlock smelt(){
-        return new SandBlock();
+    public Block smelt(){
+        return new GlassBlock();
     }
 }

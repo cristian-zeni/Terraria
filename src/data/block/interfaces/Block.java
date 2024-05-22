@@ -1,4 +1,4 @@
-package data.block;
+package data.block.interfaces;
 
 public interface Block {
 

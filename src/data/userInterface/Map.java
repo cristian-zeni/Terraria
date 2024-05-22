@@ -1,7 +1,7 @@
 package data.userInterface;
 
 import data.block.AirBlock;
-import data.block.Block;
+import data.block.interfaces.Block;
 import data.block.SandBlock;
 import data.block.WaterBlock;
 

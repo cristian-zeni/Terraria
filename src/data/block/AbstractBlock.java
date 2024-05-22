@@ -1,6 +1,8 @@
 package data.block;
 
-public abstract class AbstractBlock implements Block{
+import data.block.interfaces.Block;
+
+public abstract class AbstractBlock implements Block {
     public char contenuto;
     public String blockname;
     public boolean falls_with_gravity;

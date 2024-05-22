@@ -41,6 +41,7 @@ public class Main {
         world.insert_rec(0, 2, s);
         System.out.println();
         world.display_on_out();
+        System.out.println();
         world.addSea();
         world.display_on_out();
     }

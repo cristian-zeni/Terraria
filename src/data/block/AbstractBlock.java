@@ -24,4 +24,8 @@ public abstract class AbstractBlock implements Block {
         return "Nome: " + blockname + "; Gravità" + falls_with_gravity + "; Solido: " + !fall_through;
     }
 
+    @Override
+    public void display_in_inventory() {
+        System.out.println(contenuto);
+    }
 }

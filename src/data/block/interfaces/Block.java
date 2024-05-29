@@ -1,6 +1,6 @@
 package data.block.interfaces;
 
-public interface Block {
+public interface Block extends InventoryBlock{
 
     public boolean isGravityAffected();
     public boolean isNotSolid();

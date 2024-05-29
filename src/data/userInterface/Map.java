@@ -3,9 +3,11 @@ package data.userInterface;
 import data.block.interfaces.SmeltableBlock;
 import data.block.typesOfBlock.AirBlock;
 import data.block.interfaces.Block;
+import data.block.typesOfBlock.RawIronBlock;
 import data.block.typesOfBlock.SandBlock;
 import data.block.typesOfBlock.WaterBlock;
 import data.utility.Coordinate;
+import data.utility.Factory;
 
 import java.util.Random;
 
@@ -13,12 +15,14 @@ public class Map {
 
     private static final int DIM = 8;
     private Block[][] map;
+    private Factory factory;
 
     public Map(){
+        this.factory = new Factory();
         map = new Block[DIM][DIM];
         for(int i = 0; i < DIM; i++){
             for(int j = 0; j < DIM; j++){
-                map[i][j] = new AirBlock();
+                map[i][j] = factory.airBlock();
             }
         }
         popolate(15, 3);
@@ -36,7 +40,13 @@ public class Map {
     public void popolate(int solid, int water){
         Random rand = new Random();
         for (int i = 0 ; i < solid; i++){
-            Block b = new SandBlock();
+            int type = rand.nextInt(2);
+            Block b;
+            if(type == 0){
+                b = factory.sand_block();
+            }else{
+                b = factory.rawIronBlock();
+            }
             int row = rand.nextInt(DIM);
             int col = rand.nextInt(DIM);
             Coordinate c = new Coordinate(row, col);
@@ -99,7 +109,7 @@ public class Map {
 
     //Start of water methods
     private void addRowsOfWater(){
-        WaterBlock a = new WaterBlock();
+        WaterBlock a = factory.waterBlock();
         for(int y = 0; y < DIM; y++){
             Coordinate c = new Coordinate(0, y);
             insert_rec(c, a);
